@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   author: "Shawn Ma"
+  description: Docker
   company: ThoughtWorks, Inc.
   license: BSD
   min_ansible_version: 2.0
@@ -11,12 +12,12 @@ galaxy_info:
     - name: Debian
       versions:
        - stretch
-    - name: CentOS
+    - name: EL
       versions:
        - 7
-    - name: SLES
+    - name: opensuse
       versions:
-       - 12
+       - 12.3
   galaxy_tags:
     - virtualization
     - cloud
