@@ -6,6 +6,7 @@ Installs Docker on:
 * Ubuntu 16.04
 * Debian 9
 * CentOS 7
+* OpenSuse 12.3
 
 **Example Play**:
 
@@ -50,7 +51,7 @@ create some VMs:
 * Ubuntu 16.04
 * Debian Stretch 9.0
 * CentOS 7
-* SLES   12sp3
+* OpenSuse 12.3
 
 and it will provision them by applying this role with Ansible.
 
