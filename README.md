@@ -16,7 +16,7 @@ Very basic install utilizing the role defaults:
 - name: Run docker
   hosts: docker
   roles:
-    - flywind.docker
+    - basecomponent.docker
 ```
 
 Overriding the default configration is done by overriding the role's default variables:
@@ -27,7 +27,7 @@ Overriding the default configration is done by overriding the role's default var
   vars:
     docker_directory: "/data/lib/docker"
   roles:
-    - role: flywind.docker
+    - role: basecomponent.docker
 ```
 
 
