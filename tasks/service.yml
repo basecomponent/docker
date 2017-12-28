@@ -1,0 +1,7 @@
+---
+- name: register docker service
+  service:
+    name: docker
+    enabled: yes
+    state: started
+  become: yes

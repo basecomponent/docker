@@ -1,0 +1,19 @@
+---
+- name: add docker apt key
+  rpm_key:
+    key: "{{ docker_repository }}/gpg"
+    state: present
+  become: yes
+
+- name: install docker zypper repository
+  zypper_repository:
+    name: "docker-{{ docker_edition }}"
+    repo: "{{ docker_repository }}/12.3/$basearch/stable"
+    state: present
+  become: yes
+
+- name: install docker package
+  zypper:
+    name: "{{ docker_package }}={{ docker_version }}"
+    state: present
+  become: yes

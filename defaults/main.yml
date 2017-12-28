@@ -1,0 +1,60 @@
+---
+# mode
+offline: no
+
+# package
+docker_edition: ce
+docker_package: "docker-{{ docker_edition }}"
+docker_version: 17.03.*
+
+# directory
+docker_directory: /var/lib/docker
+
+# repository
+docker_repository: "https://download.docker.com/linux/{{ ansible_distribution | lower }}"
+
+# subscription
+docker_subscription: "sub-4132bc74-636b-4e9f-8c3a-493052fa7fda"
+
+# options
+docker_daemon: {}
+docker_config:
+  graph: "{{ docker_directory }}"
+  hosts: [
+    "tcp://0.0.0.0:2375",
+    "unix:///var/run/docker.sock"
+  ]
+  log-level: info
+  log-driver: json-file
+  log-opts:
+    max-file: "5"
+    max-size: "10m"
+
+#
+# certs
+#
+# A list of certs. e.g.
+# docker_certs:
+#   - "ca.crt"
+docker_certs: []
+#
+# registry
+#
+# A list of registries. e.g.
+# docker_registries:
+#   - host: docker.chatid.com
+#     auth: path/to/ca.crt
+docker_registries: []
+
+#  additonal directory
+# docker_additonal_directory:
+
+# You can set any interface, that is listened by docker engine.
+docker_swarm_interface: "{{ ansible_default_ipv4['interface'] }}"
+docker_swarm_addr: "{{ hostvars[inventory_hostname]['ansible_' + docker_swarm_interface]['ipv4']['address'] }}"
+docker_swarm_port: 2377
+
+# Switches disabling the docker-engine, docker group and swarm-mode setup.
+skip_engine: false
+skip_swarm: false
+skip_docker_py: false

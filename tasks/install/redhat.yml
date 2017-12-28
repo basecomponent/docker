@@ -1,0 +1,23 @@
+---
+- name: install docker yum repository
+  yum_repository:
+    name: "docker-{{ docker_edition }}"
+    description: "Docker Repository"
+    baseurl: "{{ docker_repository }}/{{ ansible_distribution_major_version }}/$basearch/stable"
+    gpgkey: "{{ docker_repository }}/gpg"
+    enabled: yes
+  become: yes
+
+- name: install docker packages
+  shell: "yum  install -y --setopt=obsoletes=0 {{ docker_package }}-{{ docker_version }} {{ docker_package }}-selinux-{{ docker_version }}"
+  #yum:
+  #  name: "{{ docker_package }}-{{ docker_version }}"
+  #  update_cache: yes
+  #  state: present
+  become: yes
+
+- name: install docker library
+  yum:
+    name: "{{ docker_python_library }}"
+    state: present
+  become: yes

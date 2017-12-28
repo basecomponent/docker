@@ -1,0 +1,16 @@
+# package
+docker_edition: ee
+docker_package: "docker-{{ docker_edition }}"
+docker_version: 17.03.2.ee.8
+
+# repository
+docker_repository: "https://storebits.docker.com/ee/linux/{{ docker_subscription }}/sles"
+
+
+# histories
+docker_histories:
+  - docker
+  - docker-engine
+
+# required
+docker_dependencies: []

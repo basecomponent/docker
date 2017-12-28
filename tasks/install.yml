@@ -1,0 +1,26 @@
+---
+- name: ensure docker versions
+  package:
+    name: "{{ item }}"
+    state: absent
+  become: yes
+  with_items: "{{ docker_histories }}"
+
+- name: ensure docker dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items: "{{ docker_dependencies }}"
+
+- name: ensure docker directories
+  file:
+    path: "{{ docker_directory }}"
+    owner: root
+    group: root
+    mode: 0711
+    state: directory
+  become: yes
+
+- name: "install docker-engine in {{ ansible_distribution|lower }} system"
+  include_tasks: "install/{{ ansible_os_family|lower }}.yml"

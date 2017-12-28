@@ -1,0 +1,12 @@
+docker_dependencies:
+  - lvm2
+  - yum-utils
+  - device-mapper-persistent-data
+
+docker_histories:
+  - docker
+  - docker-common
+  - docker-selinux
+  - docker-engine
+
+docker_python_library: "docker-python"

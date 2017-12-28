@@ -1,0 +1,26 @@
+---
+- name: install docker apt key
+  apt_key:
+    url: "{{ docker_repository }}/gpg"
+    state: present
+  become: yes
+
+- name: install docker apt repository
+  apt_repository:
+    repo: "deb {{ docker_repository }} {{ ansible_distribution_release }} stable"
+    filename: "docker-{{ docker_edition }}"
+    update_cache: yes
+    state: present
+  become: yes
+
+- name: install docker packages
+  apt:
+    name: "{{ docker_package }}={{ docker_version }}"
+    state: present
+  become: yes
+
+- name: install docker library
+  apt:
+    name: "{{ docker_python_library }}"
+    state: present
+  become: yes

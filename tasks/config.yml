@@ -1,0 +1,54 @@
+---
+- name: "config docker in {{ ansible_distribution|lower }} system"
+  include_tasks: "config/{{ ansible_os_family|lower }}.yml"
+
+- name: fact docker daemon configuration
+  set_fact:
+    docker_daemon: "{{ docker_daemon|combine({ item.key: item.value }) }}"
+  when: item.value != ""
+  with_dict: "{{ docker_config }}"
+
+- name: ensure docker daemon configuration directory
+  file:
+    path: /etc/docker
+    owner: root
+    group: root
+    mode: 0644
+    state: directory
+  become: yes
+
+- name: configure docker daemon
+  copy:
+    content: "{{ docker_daemon | to_nice_json }}"
+    dest: /etc/docker/daemon.json
+    backup: yes
+  notify:
+    - restart docker
+  become: yes
+
+- name: ensure docker systemd configuration directory
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+  when: ansible_service_mgr == "systemd"
+  become: yes
+
+- name: configure docker systemd
+  template:
+    src: docker.j2.service
+    dest: /etc/systemd/system/docker.service
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_service_mgr == "systemd"
+  register: docker_register_systemd_service
+  notify:
+    - restart docker
+  become: yes
+
+- name: reload systemd daemon
+  command: systemctl daemon-reload
+  when: (ansible_service_mgr == 'systemd' and ((docker_register_systemd_service|d() and docker_register_systemd_service|changed) ))
+  notify:
+    - restart docker
+  become: yes
