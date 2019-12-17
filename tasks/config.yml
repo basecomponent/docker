@@ -48,7 +48,7 @@
 
 - name: reload systemd daemon
   command: systemctl daemon-reload
-  when: (ansible_service_mgr == 'systemd' and ((docker_register_systemd_service|d() and docker_register_systemd_service|changed) ))
+  when: (ansible_service_mgr == 'systemd' and ((docker_register_systemd_service|d() and docker_register_systemd_service is changed) ))
   notify:
     - restart docker
   become: yes
